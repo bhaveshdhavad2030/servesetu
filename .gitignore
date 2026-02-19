@@ -1,0 +1,86 @@
+# =========================
+# General
+# =========================
+.DS_Store
+*.log
+logs
+tmp
+temp
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Node Modules
+# =========================
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# =========================
+# Build Outputs
+# =========================
+dist/
+build/
+frontend/dist/
+frontend/build/
+backend/dist/
+backend/build/
+
+# =========================
+# Coverage & Testing
+# =========================
+coverage/
+*.lcov
+
+# =========================
+# Editor & IDE
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Package Managers
+# =========================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# Cache
+# =========================
+.cache/
+.npm/
+.eslintcache
+
+# =========================
+# OS Generated Files
+# =========================
+Thumbs.db
+node_modules
+.env
+.DS_Store
+frontend/node_modules
+backend/node_modules
+dist
+build
+
+# =========================
+# Internal / local-only files
+# =========================
+# Docs created for internal use only (do not push)
+docs/
+# Allow public docs to be tracked
+!docs/public/
+!docs/public/**
