@@ -1,12 +1,24 @@
 import { useNavigate } from "react-router-dom"
+import { sampleBookings, platformStats } from '../../servesetuData'
 
 export default function TechnicianDashboard() {
   const navigate = useNavigate()
 
-  const jobs = [
-    { id: 1, customer: "John Doe", service: "Plumbing", date: "2024-01-15", status: "Completed", price: 590 },
-    { id: 2, customer: "Jane Smith", service: "Electrical", date: "2024-01-20", status: "Accepted", price: 690 },
-  ]
+  // build metrics from sample data (in real app these come from API)
+  const totalJobs = sampleBookings.length
+  const earned = sampleBookings.reduce((sum, j) => sum + j.price, 0)
+  const pendingJobs = sampleBookings.filter(j => j.status !== 'completed').length
+  const rating = platformStats.averageRating.toFixed(1)
+
+  // convert sample bookings to job list
+  const jobs = sampleBookings.map((b) => ({
+    id: b.id,
+    customer: b.customerName || 'Unknown',
+    service: b.serviceType,
+    date: b.date,
+    status: b.status === 'completed' ? 'Completed' : 'Pending',
+    price: b.price,
+  }))
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -27,19 +39,19 @@ export default function TechnicianDashboard() {
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Total Jobs</p>
-            <h2 className="text-3xl font-bold text-black">28</h2>
+            <h2 className="text-3xl font-bold text-black">{totalJobs}</h2>
           </div>
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Rating</p>
-            <h2 className="text-3xl font-bold text-black">4.8★</h2>
+            <h2 className="text-3xl font-bold text-black">{rating}★</h2>
           </div>
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Earned</p>
-            <h2 className="text-3xl font-bold text-black">₹18,500</h2>
+            <h2 className="text-3xl font-bold text-black">₹{earned}</h2>
           </div>
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Pending Jobs</p>
-            <h2 className="text-3xl font-bold text-black">3</h2>
+            <h2 className="text-3xl font-bold text-black">{pendingJobs}</h2>
           </div>
         </div>
 

@@ -22,19 +22,21 @@ export default function TechnicianProfile() {
           <div className="bg-gradient-to-r from-gray-100 to-gray-50 h-32 flex items-center justify-center text-6xl">👨‍🔧</div>
           <div className="p-8">
             <h1 className="text-3xl font-bold text-black mb-2">Raj Kumar</h1>
-            <p className="text-gray-600 mb-4">Plumbing Expert • 5+ Years Experience</p>
-            
-            <div className="flex gap-4 mb-8">
+            <p className="text-gray-600 mb-2">Plumbing Expert • 5+ Years Experience</p>
+            <div className="flex items-center gap-4 mb-4">
               <div className="flex items-center gap-1">
                 <span className="text-yellow-500 text-lg">★</span>
                 <span className="text-lg font-semibold text-black">4.8</span>
                 <span className="text-gray-600 text-sm">(150 reviews)</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-green-600 font-medium">✓ Verified</span>
-              </div>
+              {/** verified badge **/}
+              <span className="text-green-600 font-medium">✓ Verified</span>
             </div>
-
+            <div className="flex gap-4 mb-8">
+              <button className="px-4 py-2 bg-black text-white rounded-lg">Book Now</button>
+              <button className="px-4 py-2 border border-gray-300 rounded-lg">Message</button>
+              <button className="px-4 py-2 border border-gray-300 rounded-lg">Call</button>
+            </div>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-600 text-sm mb-1">Service Rate</p>

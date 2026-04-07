@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom"
+import { sampleBookings, platformStats } from '../../servesetuData'
 
 export default function CustomerDashboard() {
   const navigate = useNavigate()
 
-  const bookings = [
-    { id: 1, technician: "Raj Kumar", service: "Plumbing", date: "2024-01-15", status: "Completed", price: 590 },
-    { id: 2, technician: "Priya Sharma", service: "Electrical", date: "2024-01-20", status: "Pending", price: 690 },
-  ]
+  // compute some customer-specific metrics
+
+  // compute some customer-specific metrics
+  const totalBookings = sampleBookings.length
+  const totalSpent = sampleBookings.reduce((sum, b) => sum + b.price, 0)
+  const activeBookings = sampleBookings.filter(b => b.status !== 'completed').length
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -24,18 +27,22 @@ export default function CustomerDashboard() {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Total Bookings</p>
-            <h2 className="text-3xl font-bold text-black">12</h2>
+            <h2 className="text-3xl font-bold text-black">{totalBookings}</h2>
           </div>
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Spent</p>
-            <h2 className="text-3xl font-bold text-black">₹7,500</h2>
+            <h2 className="text-3xl font-bold text-black">₹{totalSpent}</h2>
           </div>
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <p className="text-gray-600 text-sm mb-2">Active Bookings</p>
-            <h2 className="text-3xl font-bold text-black">2</h2>
+            <h2 className="text-3xl font-bold text-black">{activeBookings}</h2>
+          </div>
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <p className="text-gray-600 text-sm mb-2">Verified Technicians</p>
+            <h2 className="text-3xl font-bold text-black">{platformStats.totalTechnicians}+</h2>
           </div>
         </div>
 
@@ -44,18 +51,18 @@ export default function CustomerDashboard() {
             <h2 className="text-xl font-bold text-black">Recent Bookings</h2>
           </div>
           <div className="divide-y divide-gray-200">
-            {bookings.map((booking) => (
+            {sampleBookings.map((booking) => (
               <div key={booking.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-black">{booking.technician}</h3>
-                  <p className="text-sm text-gray-600">{booking.service} • {booking.date}</p>
+                  <h3 className="font-semibold text-black">{booking.technicianName}</h3>
+                  <p className="text-sm text-gray-600">{booking.serviceType} • {booking.date}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-black">₹{booking.price}</p>
                   <span className={`text-xs font-medium px-2 py-1 rounded ${
-                    booking.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                    booking.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                   }`}>
-                    {booking.status}
+                    {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                   </span>
                 </div>
               </div>
