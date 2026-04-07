@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  TECHNICIAN
+  ADMIN
+}
+
+enum ServiceRequestStatus {
+  DRAFT
+  CREATED
+  ASSIGNED
+  ACCEPTED
+  ON_ROUTE
+  ARRIVED
+  DIAGNOSIS_IN_PROGRESS
+  ESTIMATE_SENT
+  APPROVED
+  REPAIR_IN_PROGRESS
+  COMPLETED
+  PAID
+  CLOSED
+  CANCELLED_BY_CUSTOMER
+  CANCELLED_BY_TECHNICIAN
+  NO_SHOW
+  DISPUTED
+  REFUNDED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  name      String?
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  technicianProfile TechnicianProfile?
+  customerProfile   CustomerProfile?
+  serviceRequests   ServiceRequest[]    @relation("ServiceRequestCustomer")
+  assignedRequests  ServiceRequest[]    @relation("ServiceRequestTechnician")
+}
+
+model CustomerProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TechnicianProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  isVerified  Boolean  @default(false)
+  serviceArea String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ServiceCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  icon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  issues ServiceIssue[]
+}
+
+model ServiceIssue {
+  id          String   @id @default(cuid())
+  categoryId  String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, name])
+}
+
+model ServiceRequest {
+  id          String               @id @default(cuid())
+  customerId  String
+  technicianId String?
+  categoryId  String
+  issueIds    String[]             @default([])
+  address     String
+  slotDate    DateTime
+  notes       String?
+  status      ServiceRequestStatus @default(CREATED)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  customer   User            @relation("ServiceRequestCustomer", fields: [customerId], references: [id], onDelete: Cascade)
+  technician User?           @relation("ServiceRequestTechnician", fields: [technicianId], references: [id], onDelete: SetNull)
+  category   ServiceCategory @relation(fields: [categoryId], references: [id])
+}
+

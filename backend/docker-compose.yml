@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: servesetu-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: servesetu
+      POSTGRES_PASSWORD: servesetu
+      POSTGRES_DB: servesetu
+    volumes:
+      - servesetu_pgdata:/var/lib/postgresql/data
+
+volumes:
+  servesetu_pgdata:
+
