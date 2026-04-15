@@ -3,24 +3,34 @@
  * Centralized API client configuration with interceptors
  */
 
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import axiosRetry from 'axios-retry';
 import { apiConfig } from '../config/api.config';
 import { STORAGE_KEYS } from '../config/constants.config';
 import { handleApiError, logError } from '../utils/errors';
 
+import type { AxiosInstance } from 'axios';
+
+interface ApiClient extends AxiosInstance {
+  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+}
+
 // Create axios instance
-const api: AxiosInstance = axios.create({
+const api = axios.create({
   baseURL: apiConfig.baseURL,
   timeout: apiConfig.timeout,
   headers: apiConfig.headers,
-});
+}) as unknown as ApiClient;
 
 // Configure retry logic
 axiosRetry(api, {
   retries: 3,
   retryDelay: axiosRetry.exponentialDelay,
-  retryCondition: (error) => {
+  retryCondition: (error: AxiosError) => {
     return (
       axiosRetry.isNetworkOrIdempotentRequestError(error) ||
       error.response?.status === 429

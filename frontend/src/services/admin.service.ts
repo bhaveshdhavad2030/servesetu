@@ -464,7 +464,7 @@ export const adminService = {
       data,
       { responseType: 'blob' }
     );
-    return response.data;
+    return response;
   },
 
   // =====================

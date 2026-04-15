@@ -278,7 +278,7 @@ export const messageService = {
       apiEndpoints.messages.downloadAttachment.replace(':id', attachmentId),
       { responseType: 'blob' }
     );
-    return response.data;
+    return response;
   },
 
   // =====================
