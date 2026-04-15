@@ -1,98 +1,123 @@
 import { useParams, useNavigate } from "react-router-dom"
+import { User, Star, ShieldCheck, Clock, CheckCircle } from "lucide-react"
 
 export default function TechnicianProfile() {
   const { id } = useParams()
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={() => navigate("/marketplace")}
-            className="text-black font-semibold hover:text-gray-700"
-          >
-            ← Back
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
+          <button onClick={() => navigate("/marketplace")} className="text-slate-900 font-semibold hover:text-slate-700">
+            ← Back to Marketplace
+          </button>
+          <div className="text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#2563EB]">Technician Profile</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Raj Kumar</h1>
+          </div>
+          <button onClick={() => navigate(`/booking/${id}`)} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
+            Book Now
           </button>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-gray-100 to-gray-50 h-32 flex items-center justify-center text-6xl">👨‍🔧</div>
-          <div className="p-8">
-            <h1 className="text-3xl font-bold text-black mb-2">Raj Kumar</h1>
-            <p className="text-gray-600 mb-4">Plumbing Expert • 5+ Years Experience</p>
-            
-            <div className="flex gap-4 mb-8">
-              <div className="flex items-center gap-1">
-                <span className="text-yellow-500 text-lg">★</span>
-                <span className="text-lg font-semibold text-black">4.8</span>
-                <span className="text-gray-600 text-sm">(150 reviews)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-green-600 font-medium">✓ Verified</span>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-600 text-sm mb-1">Service Rate</p>
-                <p className="text-2xl font-bold text-black">₹500/hour</p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-600 text-sm mb-1">Response Time</p>
-                <p className="text-2xl font-bold text-black">15 mins</p>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-black mb-4">About</h2>
-              <p className="text-gray-600 leading-relaxed">
-                Professional plumber with 5+ years of experience in residential and commercial plumbing. Specialized in leak repairs, pipe installations, and water management systems. Quick response time and guaranteed customer satisfaction.
-              </p>
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-black mb-4">Services</h2>
-              <div className="flex flex-wrap gap-2">
-                {['Leak Repair', 'Pipe Installation', 'Drain Cleaning', 'Water Tank Service'].map((service) => (
-                  <span key={service} className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">
-                    {service}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="border-t border-gray-200 pt-8">
-              <h2 className="text-xl font-bold text-black mb-4">Reviews</h2>
-              <div className="space-y-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-black">John Doe</span>
-                    <span className="text-yellow-500">★★★★★</span>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section className="rounded-[2rem] bg-white border border-slate-200 shadow-sm overflow-hidden">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] p-8">
+            <div>
+              <div className="flex flex-col gap-6">
+                <div className="rounded-[2rem] bg-slate-50 p-8 shadow-sm">
+                  <div className="flex items-center gap-6">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-[#0B3D91] text-4xl text-white shadow-lg">
+                      <User className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.24em] text-[#2563EB] mb-2">Expert technician</p>
+                      <h2 className="text-4xl font-bold text-slate-900">Raj Kumar</h2>
+                      <p className="text-slate-600 mt-2">Plumbing Specialist • 5+ years experience</p>
+                    </div>
                   </div>
-                  <p className="text-gray-600 text-sm">Great service, very professional and timely. Highly recommended!</p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-black">Jane Smith</span>
-                    <span className="text-yellow-500">★★★★☆</span>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+                    <p className="text-sm text-slate-500 mb-3">Rating</p>
+                    <div className="flex items-center gap-2 text-slate-900 font-bold text-3xl">
+                      <Star className="w-6 h-6 text-yellow-400" /> 4.8
+                    </div>
                   </div>
-                  <p className="text-gray-600 text-sm">Good work, fair pricing. Completed the job quickly.</p>
+                  <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+                    <p className="text-sm text-slate-500 mb-3">Verified</p>
+                    <div className="flex items-center gap-2 text-[#0B3D91] font-semibold text-lg">
+                      <ShieldCheck className="w-5 h-5" /> Yes
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">About</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Professional plumber with strong experience in leak repair, pipe installation, and residential plumbing. Fast response, transparent pricing, and customer satisfaction guaranteed.
+                  </p>
                 </div>
               </div>
+            </div>
+
+            <aside className="space-y-6">
+              <div className="rounded-[2rem] bg-[#0B3D91] p-8 text-white shadow-xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <CheckCircle className="w-6 h-6" />
+                  <h3 className="text-xl font-bold">Quick Response</h3>
+                </div>
+                <p className="text-slate-200 leading-relaxed">Booked services are confirmed quickly so customers get help fast when they need it most.</p>
+              </div>
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Service Rates</h3>
+                <div className="space-y-4 text-slate-600">
+                  <div className="flex items-center justify-between">
+                    <span>Plumbing</span>
+                    <span className="font-semibold text-slate-900">₹500/hour</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Leak Repair</span>
+                    <span className="font-semibold text-slate-900">₹450</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Pipe Installation</span>
+                    <span className="font-semibold text-slate-900">₹700</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <div className="border-t border-slate-200 bg-slate-50 p-8">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6">Customer Reviews</h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              {[
+                { customer: "John Doe", rating: 5, message: "Very professional and fast. Recommend to everyone." },
+                { customer: "Priya Gupta", rating: 4, message: "Great workmanship and excellent follow-up." },
+              ].map((review) => (
+                <div key={review.customer} className="rounded-[1.75rem] bg-white border border-slate-200 p-6 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="font-semibold text-slate-900">{review.customer}</p>
+                      <p className="text-sm text-slate-500">Verified customer</p>
+                    </div>
+                    <div className="text-yellow-500">{'★'.repeat(review.rating)}</div>
+                  </div>
+                  <p className="text-slate-600">{review.message}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        <button
-          onClick={() => navigate(`/booking/${id}`)}
-          className="mt-8 w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 text-lg font-semibold"
-        >
-          Book Now
+        <button onClick={() => navigate(`/booking/${id}`)} className="mt-8 w-full rounded-[2rem] bg-[#0B3D91] px-6 py-4 text-lg font-semibold text-white shadow-xl shadow-[#0B3D91]/20 hover:bg-[#2563EB] transition">
+          Book Raj Now
         </button>
-      </div>
+      </main>
     </div>
   )
 }
