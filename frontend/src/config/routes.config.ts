@@ -9,6 +9,9 @@ export const routes = {
   register: '/register',
   forgotPassword: '/forgot-password',
   home: '/',
+  about: '/about',
+  contact: '/contact',
+  privacyPolicy: '/privacy-policy',
   
   // Customer routes
   customerHome: '/servesetu',

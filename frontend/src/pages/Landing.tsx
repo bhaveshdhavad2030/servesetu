@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import technician from "../assets/technician.jpg";
 import { ArrowRight, Shield, Clock, Award, Star, Search, Wrench, Zap, Droplet, Wind, Palette } from "lucide-react"
 
@@ -36,7 +36,9 @@ export default function Landing() {
           <div className="hidden md:flex items-center gap-8 text-gray-600">
             <a href="#services" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">Services</a>
             <a href="#benefits" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">Why Us</a>
-            <a href="#testimonials" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">Reviews</a>
+            <Link to="/about" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">About Us</Link>
+            <Link to="/contact" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">Contact</Link>
+            <Link to="/privacy-policy" className="text-sm font-medium hover:text-[#0B3D91] transition-colors">Privacy Policy</Link>
           </div>
 
           <button
@@ -246,9 +248,9 @@ export default function Landing() {
             <div>
               <h4 className="font-bold mb-6">Support</h4>
               <ul className="space-y-4 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
