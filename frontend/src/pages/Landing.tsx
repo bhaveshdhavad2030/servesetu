@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom"
 import technician from "../assets/technician.jpg";
 import { ArrowRight, Shield, Clock, Award, Star, Search, Wrench, Zap, Droplet, Wind, Palette } from "lucide-react"
