@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/bhaveshdhavad2030/servesetu/issues"
   },
-  "homepage": "https://github.com/bhaveshdhavad2030/servesetu#readme"
+  "homepage": "https://github.com/bhaveshdhavad2030/servesetu#readme",
+  "dependencies": {
+    "mongodb": "^7.1.1"
+  }
 }
