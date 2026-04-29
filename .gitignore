@@ -84,3 +84,4 @@ docs/
 # Allow public docs to be tracked
 !docs/public/
 !docs/public/**
+.vercel/
