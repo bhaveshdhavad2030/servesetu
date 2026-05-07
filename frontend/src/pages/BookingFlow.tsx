@@ -9,8 +9,8 @@ export default function BookingFlow() {
     <div className="min-h-screen bg-slate-50">
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <button onClick={() => navigate("/marketplace")} className="text-slate-900 font-semibold hover:text-slate-700">
-            ← Back to Marketplace
+          <button onClick={() => navigate("/services")} className="text-slate-900 font-semibold hover:text-slate-700">
+            ← Back to Services
           </button>
           <h1 className="text-lg sm:text-xl font-bold text-slate-900">Confirm Booking</h1>
           <span className="w-16" />

@@ -9,8 +9,8 @@ export default function TechnicianProfile() {
     <div className="min-h-screen bg-slate-50">
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
-          <button onClick={() => navigate("/marketplace")} className="text-slate-900 font-semibold hover:text-slate-700">
-            ← Back to Marketplace
+          <button onClick={() => navigate("/services")} className="text-slate-900 font-semibold hover:text-slate-700">
+            ← Back to Services
           </button>
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-[#2563EB]">Technician Profile</p>

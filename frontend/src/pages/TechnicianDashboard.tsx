@@ -53,7 +53,7 @@ export default function TechnicianDashboard() {
                 <h2 className="text-2xl font-bold text-slate-900">Recent Job Requests</h2>
                 <p className="text-sm text-slate-500">Keep up with your latest assignments.</p>
               </div>
-              <button onClick={() => navigate("/marketplace")} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
+              <button onClick={() => navigate("/services")} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
                 Browse jobs
               </button>
             </div>

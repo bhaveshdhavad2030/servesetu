@@ -52,7 +52,7 @@ export default function CustomerDashboard() {
                 <h2 className="text-2xl font-bold text-slate-900">Recent Bookings</h2>
                 <p className="text-sm text-slate-500">Track your latest service requests.</p>
               </div>
-              <button onClick={() => navigate("/marketplace")} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
+              <button onClick={() => navigate("/services")} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
                 Book again
               </button>
             </div>
@@ -87,7 +87,7 @@ export default function CustomerDashboard() {
             <div className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
               <h2 className="text-xl font-bold text-slate-900 mb-4">Need help?</h2>
               <p className="text-slate-600 mb-6">Reach customer support for booking changes, cancellations, and service questions.</p>
-              <button onClick={() => navigate("/marketplace")} className="w-full rounded-full bg-[#2563EB] px-6 py-3 text-white font-semibold hover:bg-[#1D4ED8]">
+              <button onClick={() => navigate("/services")} className="w-full rounded-full bg-[#2563EB] px-6 py-3 text-white font-semibold hover:bg-[#1D4ED8]">
                 Browse Services
               </button>
             </div>
