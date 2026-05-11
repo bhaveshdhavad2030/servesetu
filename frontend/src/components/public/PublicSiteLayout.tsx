@@ -9,14 +9,14 @@ const navItems = [
   { label: 'Contact', to: '/contact' },
 ] as const
 
-function BrandMark() {
+function BrandMark({ onDark = false }: { onDark?: boolean }) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B3D91] text-sm font-bold text-white shadow-lg">
-        SS
+    <div className="flex items-center gap-2.5">
+      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl p-1 shadow-md ${onDark ? 'bg-white' : 'bg-white border border-slate-200'}`}>
+        <img src="/logo.png" alt="ServeSetu logo" className="h-full w-full object-contain" />
       </div>
-      <span className="text-2xl font-bold tracking-tight text-[#0B3D91]">
-        Serve<span className="text-[#2563EB]">Setu</span>
+      <span className={`text-2xl font-bold tracking-tight ${onDark ? 'text-white' : 'text-[#0B3D91]'}`}>
+        Serve<span className={onDark ? 'text-blue-300' : 'text-[#2563EB]'}>Setu</span>
       </span>
     </div>
   )
@@ -73,7 +73,7 @@ export default function PublicSiteLayout({
           <div className="mb-16 grid gap-12 text-center md:grid-cols-4 md:text-left">
             <div className="md:col-span-2">
               <div className="mb-6 flex items-center justify-center gap-3 md:justify-start">
-                <BrandMark />
+                <BrandMark onDark />
               </div>
               <p className="mx-auto max-w-md text-sm leading-7 text-slate-400 md:mx-0">
                 ServeSetu connects households with verified professionals for fast,
