@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import ServeLogo from './ServeLogo'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -12,9 +13,7 @@ const navItems = [
 function BrandMark({ onDark = false }: { onDark?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl p-1 shadow-md ${onDark ? 'bg-white' : 'bg-white border border-slate-200'}`}>
-        <img src="/logo.png" alt="ServeSetu logo" className="h-full w-full object-contain" />
-      </div>
+      <ServeLogo size={38} color={onDark ? '#ffffff' : '#2563EB'} />
       <span className={`text-2xl font-bold tracking-tight ${onDark ? 'text-white' : 'text-[#0B3D91]'}`}>
         Serve<span className={onDark ? 'text-blue-300' : 'text-[#2563EB]'}>Setu</span>
       </span>
