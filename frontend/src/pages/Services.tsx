@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowRight,
@@ -14,6 +14,8 @@ import {
   Zap,
 } from 'lucide-react'
 import PublicSiteLayout from '../components/public/PublicSiteLayout'
+import BookingModal from '../components/public/BookingModal'
+import Toast from '../components/public/Toast'
 
 const serviceCategories = [
   {
@@ -82,7 +84,7 @@ const technicians = [
   { id: 4, name: 'Neha Patel', service: 'Painting', rating: 4.6, price: 1000, label: 'Wall artist', response: 'Weekend slots open' },
   { id: 5, name: 'Vikram Das', service: 'Appliance Repair', rating: 4.8, price: 700, label: 'Smart fixes', response: 'Trusted for kitchen repairs' },
   { id: 6, name: 'Ananya Verma', service: 'Plumbing', rating: 4.9, price: 500, label: 'Rapid response', response: 'Quick arrival support' },
-] as const
+]
 
 const promiseCards = [
   {
@@ -102,14 +104,47 @@ const promiseCards = [
   },
 ] as const
 
+function getInitials(name: string) {
+  return name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+}
+
+const avatarColors = [
+  'bg-[#0B3D91]',
+  'bg-indigo-600',
+  'bg-sky-600',
+  'bg-cyan-600',
+  'bg-blue-700',
+  'bg-violet-600',
+]
+
 export default function Services() {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
+  const [bookingTech, setBookingTech] = useState<typeof technicians[number] | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [toast, setToast] = useState({ visible: false, message: '', type: 'success' as 'success' | 'error' })
 
   function goToTechnicians(searchValue = '') {
     setSearch(searchValue)
     document.getElementById('technicians')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+
+  function openBooking(tech: typeof technicians[number]) {
+    setBookingTech(tech)
+    setModalOpen(true)
+  }
+
+  const handleBookingSuccess = useCallback(() => {
+    setModalOpen(false)
+    setBookingTech(null)
+    setToast({
+      visible: true,
+      message: `Booking request sent! ${bookingTech?.name} will confirm your slot shortly.`,
+      type: 'success',
+    })
+  }, [bookingTech])
+
+  const closeToast = useCallback(() => setToast((t) => ({ ...t, visible: false })), [])
 
   const filteredTechnicians = technicians.filter(
     (tech) =>
@@ -120,6 +155,8 @@ export default function Services() {
   return (
     <PublicSiteLayout>
       <div className="min-h-screen bg-slate-50 pt-28">
+
+        {/* Hero section */}
         <section className="relative overflow-hidden bg-white pb-16">
           <div className="absolute top-10 left-[8%] h-56 w-56 rounded-full bg-blue-100/70 blur-[110px]" />
           <div className="absolute right-[12%] bottom-8 h-64 w-64 rounded-full bg-cyan-100/70 blur-[120px]" />
@@ -192,6 +229,7 @@ export default function Services() {
           </div>
         </section>
 
+        {/* Categories */}
         <section className="bg-slate-50 py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -229,6 +267,7 @@ export default function Services() {
           </div>
         </section>
 
+        {/* Technicians */}
         <section id="technicians" className="bg-white py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -238,92 +277,135 @@ export default function Services() {
                   Browse available professionals by skill and rating.
                 </h2>
               </div>
-              <div className="w-full max-w-xl">
-                <label className="mb-3 block text-sm font-medium text-slate-600">
-                  Search technicians or services
-                </label>
-                <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 shadow-sm">
-                  <Search className="h-5 w-5 text-slate-400" />
+              <div className="w-full max-w-md">
+                <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3.5 shadow-sm transition focus-within:border-[#2563EB] focus-within:ring-1 focus-within:ring-[#2563EB]/20">
+                  <Search className="h-5 w-5 shrink-0 text-slate-400" />
                   <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Try Plumbing, Electrical, Raj Kumar..."
+                    placeholder="Search by name or service…"
                     className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
                   />
+                  {search && (
+                    <button
+                      type="button"
+                      onClick={() => setSearch('')}
+                      className="shrink-0 text-xs font-medium text-slate-400 transition hover:text-slate-600"
+                    >
+                      Clear
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[1.45fr_0.55fr]">
-              <div className="grid gap-5 md:grid-cols-2">
-                {filteredTechnicians.map((tech) => (
-                  <button
-                    key={tech.id}
-                    type="button"
-                    onClick={() => navigate(`/technician/${tech.id}`)}
-                    className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-                  >
-                    <div className="mb-5 flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm text-slate-500">{tech.service}</p>
-                        <h3 className="mt-1 text-xl font-semibold text-slate-900">{tech.name}</h3>
-                      </div>
-                      <div className="rounded-3xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 shadow-sm">
-                        ₹{tech.price}
-                      </div>
-                    </div>
+            <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
 
-                    <p className="mb-5 text-slate-600">{tech.label}</p>
+              {/* Technician list */}
+              <div>
+                {filteredTechnicians.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center rounded-[2rem] border border-dashed border-slate-200 bg-slate-50 py-20 text-center">
+                    <Search className="mb-4 h-10 w-10 text-slate-300" />
+                    <p className="font-semibold text-slate-500">No technicians found for "{search}"</p>
+                    <button
+                      type="button"
+                      onClick={() => setSearch('')}
+                      className="mt-3 text-sm font-medium text-[#2563EB] hover:underline"
+                    >
+                      Clear search
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {search && (
+                      <p className="mb-4 text-sm text-slate-500">
+                        {filteredTechnicians.length} technician{filteredTechnicians.length !== 1 ? 's' : ''} found
+                        {search ? ` for "${search}"` : ''}
+                      </p>
+                    )}
+                    {filteredTechnicians.map((tech, index) => (
+                      <div
+                        key={tech.id}
+                        className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm transition hover:border-blue-200 hover:shadow-md"
+                      >
+                        {/* Avatar */}
+                        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-sm font-bold text-white shadow ${avatarColors[index % avatarColors.length]}`}>
+                          {getInitials(tech.name)}
+                        </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 shadow-sm">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        {tech.rating}
-                      </span>
-                      <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 shadow-sm">
-                        {tech.response}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                        {/* Info */}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="font-semibold text-slate-900">{tech.name}</p>
+                            <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-[#2563EB]">
+                              {tech.service}
+                            </span>
+                          </div>
+                          <p className="mt-0.5 truncate text-xs text-slate-400">{tech.label}</p>
+                          <div className="mt-1.5 flex items-center gap-3">
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
+                              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                              {tech.rating}
+                            </span>
+                            <span className="text-slate-200">·</span>
+                            <span className="text-xs text-slate-400">{tech.response}</span>
+                          </div>
+                        </div>
+
+                        {/* Price + CTA */}
+                        <div className="flex shrink-0 flex-col items-end gap-2">
+                          <p className="text-lg font-extrabold text-[#0B3D91]">₹{tech.price}</p>
+                          <button
+                            type="button"
+                            onClick={() => openBooking(tech)}
+                            className="rounded-full bg-[#0B3D91] px-4 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#2563EB] active:scale-95"
+                          >
+                            Book Now
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <aside className="space-y-6">
-                <div className="rounded-[2rem] bg-[#0B3D91] p-8 text-white shadow-xl">
-                  <h3 className="text-2xl font-bold">Book in three clear steps</h3>
-                  <div className="mt-6 space-y-5">
+              {/* Sidebar */}
+              <aside className="space-y-5">
+                <div className="rounded-[2rem] bg-[#0B3D91] p-7 text-white shadow-xl">
+                  <h3 className="text-xl font-bold">Book in three clear steps</h3>
+                  <div className="mt-5 space-y-4">
                     {bookingSteps.map((step, index) => (
-                      <div key={step.title} className="flex items-start gap-4">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 font-semibold backdrop-blur-sm">
+                      <div key={step.title} className="flex items-start gap-3">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-sm font-semibold backdrop-blur-sm">
                           {index + 1}
                         </div>
                         <div>
-                          <h4 className="font-semibold text-white">{step.title}</h4>
-                          <p className="mt-1 text-sm leading-6 text-blue-100">{step.description}</p>
+                          <h4 className="text-sm font-semibold text-white">{step.title}</h4>
+                          <p className="mt-0.5 text-xs leading-5 text-blue-100">{step.description}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#0B3D91]">
-                      <Users className="h-6 w-6" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-[#0B3D91]">
+                      <Users className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Support Promise</p>
-                      <h3 className="mt-1 text-xl font-bold text-slate-900">Help when you need it</h3>
+                      <p className="text-xs uppercase tracking-widest text-slate-400">Support Promise</p>
+                      <h3 className="text-base font-bold text-slate-900">Help when you need it</h3>
                     </div>
                   </div>
-                  <p className="mt-5 text-sm leading-7 text-slate-600">
-                    If a customer feels unsure about category selection or technician choice, the support team can help guide the booking flow.
+                  <p className="mt-4 text-sm leading-6 text-slate-600">
+                    Not sure which category or technician to pick? Our support team can guide your booking.
                   </p>
                   <button
                     type="button"
                     onClick={() => navigate('/contact')}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
+                    className="mt-5 inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     Contact Support
                     <ArrowRight className="h-4 w-4" />
@@ -334,6 +416,22 @@ export default function Services() {
           </div>
         </section>
       </div>
+
+      {/* Booking modal */}
+      <BookingModal
+        isOpen={modalOpen}
+        technician={bookingTech}
+        onClose={() => { setModalOpen(false); setBookingTech(null) }}
+        onSuccess={handleBookingSuccess}
+      />
+
+      {/* Toast */}
+      <Toast
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onClose={closeToast}
+      />
     </PublicSiteLayout>
   )
 }
