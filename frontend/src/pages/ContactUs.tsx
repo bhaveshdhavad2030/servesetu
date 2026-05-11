@@ -11,18 +11,36 @@ export default function ContactUs() {
   const [submitting, setSubmitting] = useState(false)
   const [toast, setToast] = useState({ visible: false, message: '' })
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim() || !email.trim() || !message.trim()) return
     setSubmitting(true)
-    setTimeout(() => {
-      setSubmitting(false)
-      setName('')
-      setEmail('')
-      setRequirement('')
-      setMessage('')
-      setToast({ visible: true, message: 'Message sent! Our team will reach you shortly.' })
-    }, 1000)
+
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+    if (endpoint) {
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            form_type: 'contact',
+            customer_name: name,
+            customer_email: email,
+            requirement: requirement || '—',
+            message,
+          }),
+        })
+      } catch {
+        // silently fail — UX must not break
+      }
+    }
+
+    setSubmitting(false)
+    setName('')
+    setEmail('')
+    setRequirement('')
+    setMessage('')
+    setToast({ visible: true, message: 'Message sent! Our team will reach you shortly.' })
   }
 
   return (
