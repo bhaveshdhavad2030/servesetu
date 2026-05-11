@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2, Phone } from 'lucide-react'
+import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2, Phone, FileText } from 'lucide-react'
 
 interface Technician {
   id: number
@@ -56,8 +56,13 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
   const [address, setAddress] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [issue, setIssue] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [bookingRef, setBookingRef] = useState('')
+
+  function isValidPhone(p: string) {
+    return p.replace(/\D/g, '').length >= 10
+  }
 
   if (!isOpen || !technician) return null
 
@@ -66,6 +71,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
     setAddress('')
     setName('')
     setPhone('')
+    setIssue('')
     setBookingRef('')
   }
 
@@ -80,7 +86,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
   }
 
   async function handleSubmit() {
-    if (!address.trim() || !name.trim() || !phone.trim()) return
+    if (!address.trim() || !name.trim() || !isValidPhone(phone) || !issue.trim()) return
     setSubmitting(true)
 
     const ref = generateRef()
@@ -97,6 +103,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             customer_name: name,
             customer_phone: phone,
             customer_address: address,
+            issue_description: issue,
             technician_name: technician.name,
             service: technician.service,
             price: `₹${technician.price}`,
@@ -171,7 +178,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
         )}
 
         {/* Body */}
-        <div className="px-6 py-6">
+        <div className="max-h-[60vh] overflow-y-auto px-6 py-6">
 
           {/* Step 1 — Review */}
           {step === 1 && (
@@ -308,9 +315,24 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Flat no., building, street, city..."
+                  rows={2}
+                  className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <span className="inline-flex items-center gap-1.5">
+                    <FileText className="h-3 w-3" /> Describe Your Issue
+                  </span>
+                </label>
+                <textarea
+                  value={issue}
+                  onChange={(e) => setIssue(e.target.value)}
+                  placeholder="e.g. Water leaking from pipe under kitchen sink, AC not cooling, washing machine not spinning..."
                   rows={3}
                   className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
+                <p className="mt-1 text-xs text-slate-400">Help the technician prepare the right tools and parts.</p>
               </div>
             </div>
           )}
@@ -351,6 +373,10 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Amount</span>
                   <span className="font-extrabold text-[#005A99]">₹{technician.price}</span>
+                </div>
+                <div className="border-t border-slate-100 pt-3">
+                  <p className="text-xs text-slate-400 mb-1">Issue reported</p>
+                  <p className="text-sm text-slate-700">{issue}</p>
                 </div>
               </div>
 
@@ -403,7 +429,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  disabled={!address.trim() || !name.trim() || !phone.trim() || submitting}
+                  disabled={!address.trim() || !name.trim() || !isValidPhone(phone) || !issue.trim() || submitting}
                   className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submitting ? 'Confirming...' : 'Confirm Booking'}

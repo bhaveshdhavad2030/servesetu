@@ -5,6 +5,7 @@ import {
   BookOpen,
   Clock3,
   Droplets,
+  Paintbrush,
   Search,
   ShieldCheck,
   Sparkles,
@@ -53,6 +54,15 @@ const serviceCategories = [
     eta: 'Verified appliance specialists',
     accent: 'from-indigo-500 to-blue-500',
     icon: <BookOpen className="h-6 w-6 text-white" />,
+  },
+  {
+    id: 5,
+    title: 'Painting',
+    description: 'Interior and exterior wall painting, touch-ups, texture work, and waterproofing.',
+    price: 'Starts at ₹999',
+    eta: 'Weekend slots available',
+    accent: 'from-violet-500 to-indigo-500',
+    icon: <Paintbrush className="h-6 w-6 text-white" />,
   },
 ] as const
 
@@ -237,7 +247,7 @@ export default function Services() {
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {serviceCategories.map((service) => (
                 <button
                   key={service.id}
