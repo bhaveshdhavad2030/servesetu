@@ -72,12 +72,14 @@ export default function AboutUs() {
             </div>
 
             <div className="flex-1 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl">
-              <div className="flex h-full items-center justify-center rounded-[2rem] bg-[#E0F2FB] p-8">
-                <div className="flex h-44 w-44 items-center justify-center rounded-full bg-[#005A99] shadow-lg">
-                  <div className="flex h-28 w-28 items-center justify-center rounded-full bg-white p-3">
-                    <img src="/logo.png" alt="ServeSetu" className="h-full w-full object-contain" />
-                  </div>
-                </div>
+              <div className="relative flex h-full min-h-[280px] items-center justify-center overflow-hidden rounded-[2rem] bg-[#E0F2FB] p-12">
+                <div className="absolute h-64 w-64 rounded-full bg-[#0071BD]/20 blur-[70px]" />
+                <img
+                  src="/logo.png"
+                  alt="ServeSetu"
+                  className="relative h-52 w-52 object-contain"
+                  style={{ mixBlendMode: 'multiply' }}
+                />
               </div>
             </div>
           </div>
