@@ -90,17 +90,17 @@ const promiseCards = [
   {
     title: 'Verified professionals',
     description: 'Every technician is checked before being listed on the platform.',
-    icon: <ShieldCheck className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <ShieldCheck className="h-6 w-6 text-[#005A99]" />,
   },
   {
     title: 'Transparent pricing',
     description: 'Know the starting cost before you move into the booking flow.',
-    icon: <Sparkles className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <Sparkles className="h-6 w-6 text-[#005A99]" />,
   },
   {
     title: 'Clear scheduling',
     description: 'Pick your timing and get better visibility on service delivery.',
-    icon: <Clock3 className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <Clock3 className="h-6 w-6 text-[#005A99]" />,
   },
 ] as const
 
@@ -109,7 +109,7 @@ function getInitials(name: string) {
 }
 
 const avatarColors = [
-  'bg-[#0B3D91]',
+  'bg-[#005A99]',
   'bg-indigo-600',
   'bg-sky-600',
   'bg-cyan-600',
@@ -164,7 +164,7 @@ export default function Services() {
           <div className="relative mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
             <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
               <div>
-                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.32em] text-[#2563EB]">
+                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.32em] text-[#0071BD]">
                   Services by ServeSetu
                 </p>
                 <h1 className="max-w-3xl text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl md:text-6xl">
@@ -179,7 +179,7 @@ export default function Services() {
                   <button
                     type="button"
                     onClick={() => goToTechnicians()}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B3D91] px-8 py-4 font-semibold text-white shadow-lg shadow-[#0B3D91]/20 transition hover:bg-[#2563EB]"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#005A99] px-8 py-4 font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD]"
                   >
                     Browse Technicians
                     <ArrowRight className="h-4 w-4" />
@@ -189,7 +189,7 @@ export default function Services() {
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
                   {trustStats.map((stat) => (
                     <div key={stat.label} className="rounded-[1.75rem] border border-slate-200 bg-slate-50 px-5 py-5">
-                      <p className="text-2xl font-extrabold text-[#0B3D91]">{stat.value}</p>
+                      <p className="text-2xl font-extrabold text-[#005A99]">{stat.value}</p>
                       <p className="mt-2 text-sm text-slate-600">{stat.label}</p>
                     </div>
                   ))}
@@ -197,7 +197,7 @@ export default function Services() {
               </div>
 
               <div className="rounded-[2.5rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60">
-                <div className="rounded-[2rem] bg-gradient-to-br from-[#0B3D91] via-[#2563EB] to-cyan-400 p-8 text-white">
+                <div className="rounded-[2rem] bg-gradient-to-br from-[#005A99] via-[#0071BD] to-cyan-400 p-8 text-white">
                   <div className="flex items-center justify-between">
                     <p className="text-sm uppercase tracking-[0.24em] text-blue-100">Why people choose us</p>
                     <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur-sm">
@@ -227,7 +227,7 @@ export default function Services() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2563EB]">Categories</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0071BD]">Categories</p>
                 <h2 className="mt-3 text-3xl font-extrabold text-slate-900 md:text-4xl">
                   Services built around everyday household needs.
                 </h2>
@@ -251,7 +251,7 @@ export default function Services() {
                   <h3 className="text-xl font-semibold text-slate-900">{service.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">{service.description}</p>
                   <div className="mt-5 space-y-2">
-                    <p className="text-sm font-semibold text-[#0B3D91]">{service.price}</p>
+                    <p className="text-sm font-semibold text-[#005A99]">{service.price}</p>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{service.eta}</p>
                   </div>
                 </button>
@@ -265,13 +265,13 @@ export default function Services() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2563EB]">Technicians</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0071BD]">Technicians</p>
                 <h2 className="mt-3 text-3xl font-extrabold text-slate-900 md:text-4xl">
                   Browse available professionals by skill and rating.
                 </h2>
               </div>
               <div className="w-full max-w-md">
-                <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3.5 shadow-sm transition focus-within:border-[#2563EB] focus-within:ring-1 focus-within:ring-[#2563EB]/20">
+                <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3.5 shadow-sm transition focus-within:border-[#0071BD] focus-within:ring-1 focus-within:ring-[#0071BD]/20">
                   <Search className="h-5 w-5 shrink-0 text-slate-400" />
                   <input
                     type="text"
@@ -304,7 +304,7 @@ export default function Services() {
                     <button
                       type="button"
                       onClick={() => setSearch('')}
-                      className="mt-3 text-sm font-medium text-[#2563EB] hover:underline"
+                      className="mt-3 text-sm font-medium text-[#0071BD] hover:underline"
                     >
                       Clear search
                     </button>
@@ -331,7 +331,7 @@ export default function Services() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
                             <p className="font-semibold text-slate-900">{tech.name}</p>
-                            <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-[#2563EB]">
+                            <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-[#0071BD]">
                               {tech.service}
                             </span>
                           </div>
@@ -348,11 +348,11 @@ export default function Services() {
 
                         {/* Price + CTA */}
                         <div className="flex shrink-0 flex-col items-end gap-2">
-                          <p className="text-lg font-extrabold text-[#0B3D91]">₹{tech.price}</p>
+                          <p className="text-lg font-extrabold text-[#005A99]">₹{tech.price}</p>
                           <button
                             type="button"
                             onClick={() => openBooking(tech)}
-                            className="rounded-full bg-[#0B3D91] px-4 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#2563EB] active:scale-95"
+                            className="rounded-full bg-[#005A99] px-4 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#0071BD] active:scale-95"
                           >
                             Book Now
                           </button>
@@ -365,7 +365,7 @@ export default function Services() {
 
               {/* Sidebar */}
               <aside className="space-y-5">
-                <div className="rounded-[2rem] bg-[#0B3D91] p-7 text-white shadow-xl">
+                <div className="rounded-[2rem] bg-[#005A99] p-7 text-white shadow-xl">
                   <h3 className="text-xl font-bold">Book in three clear steps</h3>
                   <div className="mt-5 space-y-4">
                     {bookingSteps.map((step, index) => (
@@ -384,7 +384,7 @@ export default function Services() {
 
                 <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-[#0B3D91]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-[#005A99]">
                       <Users className="h-5 w-5" />
                     </div>
                     <div>

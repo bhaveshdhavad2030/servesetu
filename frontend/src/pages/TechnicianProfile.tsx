@@ -13,10 +13,10 @@ export default function TechnicianProfile() {
             ← Back to Services
           </button>
           <div className="text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#2563EB]">Technician Profile</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#0071BD]">Technician Profile</p>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Raj Kumar</h1>
           </div>
-          <button onClick={() => navigate(`/booking/${id}`)} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
+          <button onClick={() => navigate(`/booking/${id}`)} className="rounded-full bg-[#005A99] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0071BD]">
             Book Now
           </button>
         </div>
@@ -29,11 +29,11 @@ export default function TechnicianProfile() {
               <div className="flex flex-col gap-6">
                 <div className="rounded-[2rem] bg-slate-50 p-8 shadow-sm">
                   <div className="flex items-center gap-6">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-[#0B3D91] text-4xl text-white shadow-lg">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-[#005A99] text-4xl text-white shadow-lg">
                       <User className="w-10 h-10" />
                     </div>
                     <div>
-                      <p className="text-sm uppercase tracking-[0.24em] text-[#2563EB] mb-2">Expert technician</p>
+                      <p className="text-sm uppercase tracking-[0.24em] text-[#0071BD] mb-2">Expert technician</p>
                       <h2 className="text-4xl font-bold text-slate-900">Raj Kumar</h2>
                       <p className="text-slate-600 mt-2">Plumbing Specialist • 5+ years experience</p>
                     </div>
@@ -49,7 +49,7 @@ export default function TechnicianProfile() {
                   </div>
                   <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
                     <p className="text-sm text-slate-500 mb-3">Verified</p>
-                    <div className="flex items-center gap-2 text-[#0B3D91] font-semibold text-lg">
+                    <div className="flex items-center gap-2 text-[#005A99] font-semibold text-lg">
                       <ShieldCheck className="w-5 h-5" /> Yes
                     </div>
                   </div>
@@ -65,7 +65,7 @@ export default function TechnicianProfile() {
             </div>
 
             <aside className="space-y-6">
-              <div className="rounded-[2rem] bg-[#0B3D91] p-8 text-white shadow-xl">
+              <div className="rounded-[2rem] bg-[#005A99] p-8 text-white shadow-xl">
                 <div className="flex items-center gap-3 mb-4">
                   <CheckCircle className="w-6 h-6" />
                   <h3 className="text-xl font-bold">Quick Response</h3>
@@ -114,7 +114,7 @@ export default function TechnicianProfile() {
           </div>
         </section>
 
-        <button onClick={() => navigate(`/booking/${id}`)} className="mt-8 w-full rounded-[2rem] bg-[#0B3D91] px-6 py-4 text-lg font-semibold text-white shadow-xl shadow-[#0B3D91]/20 hover:bg-[#2563EB] transition">
+        <button onClick={() => navigate(`/booking/${id}`)} className="mt-8 w-full rounded-[2rem] bg-[#005A99] px-6 py-4 text-lg font-semibold text-white shadow-xl shadow-[#005A99]/20 hover:bg-[#0071BD] transition">
           Book Raj Now
         </button>
       </main>

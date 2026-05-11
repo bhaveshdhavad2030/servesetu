@@ -19,8 +19,8 @@ function BrandMark({ onDark = false }: { onDark?: boolean }) {
       ) : (
         <img src="/logo.png" alt="ServeSetu" className="h-9 w-9 object-contain" />
       )}
-      <span className={`text-2xl font-bold tracking-tight ${onDark ? 'text-white' : 'text-[#0B3D91]'}`}>
-        Serve<span className={onDark ? 'text-blue-300' : 'text-[#2563EB]'}>Setu</span>
+      <span className={`text-2xl font-bold tracking-tight ${onDark ? 'text-white' : 'text-[#005A99]'}`}>
+        Serve<span className={onDark ? 'text-blue-300' : 'text-[#0071BD]'}>Setu</span>
       </span>
     </div>
   )
@@ -48,7 +48,7 @@ export default function PublicSiteLayout({
                 to={item.to}
                 className={({ isActive }) =>
                   `text-sm font-medium transition-colors ${
-                    isActive ? 'text-[#0B3D91]' : 'text-slate-600 hover:text-[#0B3D91]'
+                    isActive ? 'text-[#005A99]' : 'text-slate-600 hover:text-[#005A99]'
                   }`
                 }
               >
@@ -60,7 +60,7 @@ export default function PublicSiteLayout({
           <button
             type="button"
             onClick={() => navigate('/services')}
-            className="group rounded-full bg-[#0B3D91] px-6 py-2.5 font-medium text-white shadow-lg shadow-blue-500/10 transition-all hover:bg-[#2563EB] active:scale-95"
+            className="group rounded-full bg-[#005A99] px-6 py-2.5 font-medium text-white shadow-lg shadow-blue-500/10 transition-all hover:bg-[#0071BD] active:scale-95"
           >
             <span className="flex items-center gap-2">
               Get Started

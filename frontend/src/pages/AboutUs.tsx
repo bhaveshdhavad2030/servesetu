@@ -4,17 +4,17 @@ import PublicSiteLayout from '../components/public/PublicSiteLayout'
 
 const featureCards = [
   {
-    icon: <ShieldCheck className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <ShieldCheck className="h-6 w-6 text-[#005A99]" />,
     title: 'Verified Technicians',
     description: 'Every professional is background checked and trained for safe home repairs.',
   },
   {
-    icon: <Sparkles className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <Sparkles className="h-6 w-6 text-[#005A99]" />,
     title: 'Transparent Pricing',
     description: 'Clear service rates with no hidden charges, every single time.',
   },
   {
-    icon: <Wallet className="h-6 w-6 text-[#0B3D91]" />,
+    icon: <Wallet className="h-6 w-6 text-[#005A99]" />,
     title: 'Fast Payments',
     description: 'Reliable payouts for partners and seamless payment options for customers.',
   },
@@ -53,8 +53,8 @@ export default function AboutUs() {
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-12 lg:flex-row">
             <div className="flex-1">
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#2563EB]">About ServeSetu</p>
-              <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-[#0B3D91] md:text-5xl">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#0071BD]">About ServeSetu</p>
+              <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-[#005A99] md:text-5xl">
                 We bring trusted home technicians to your doorstep.
               </h1>
               <p className="mb-10 max-w-2xl text-lg leading-relaxed text-slate-600">
@@ -64,7 +64,7 @@ export default function AboutUs() {
               <button
                 type="button"
                 onClick={() => navigate('/contact')}
-                className="inline-flex items-center gap-3 rounded-full bg-[#0B3D91] px-8 py-3 font-semibold text-white shadow-xl shadow-[#0B3D91]/15 transition hover:bg-[#2563EB]"
+                className="inline-flex items-center gap-3 rounded-full bg-[#005A99] px-8 py-3 font-semibold text-white shadow-xl shadow-[#005A99]/15 transition hover:bg-[#0071BD]"
               >
                 Contact Our Team
                 <ArrowRight className="h-5 w-5" />
@@ -72,8 +72,8 @@ export default function AboutUs() {
             </div>
 
             <div className="flex-1 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl">
-              <div className="flex h-full items-center justify-center rounded-[2rem] bg-[#EAF2FF] p-8">
-                <div className="flex h-44 w-44 items-center justify-center rounded-full bg-[#0B3D91] shadow-lg">
+              <div className="flex h-full items-center justify-center rounded-[2rem] bg-[#E0F2FB] p-8">
+                <div className="flex h-44 w-44 items-center justify-center rounded-full bg-[#005A99] shadow-lg">
                   <div className="flex h-28 w-28 items-center justify-center rounded-full bg-white p-3">
                     <img src="/logo.png" alt="ServeSetu" className="h-full w-full object-contain" />
                   </div>
@@ -86,7 +86,7 @@ export default function AboutUs() {
             <div className="grid gap-8 lg:grid-cols-3">
               {valueCards.map((card) => (
                 <div key={card.title} className="rounded-[2rem] border border-slate-200 bg-white p-10 shadow-sm transition hover:shadow-xl">
-                  <h2 className="mb-4 text-xl font-bold text-[#0B3D91]">{card.title}</h2>
+                  <h2 className="mb-4 text-xl font-bold text-[#005A99]">{card.title}</h2>
                   <p className="leading-relaxed text-slate-600">{card.description}</p>
                 </div>
               ))}
@@ -96,12 +96,12 @@ export default function AboutUs() {
           <section className="mt-20 rounded-[2rem] border border-slate-200 bg-white p-10 shadow-sm">
             <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="mb-3 text-3xl font-bold text-[#0B3D91]">Why We Exist</h2>
+                <h2 className="mb-3 text-3xl font-bold text-[#005A99]">Why We Exist</h2>
                 <p className="max-w-2xl text-slate-600">
                   We exist to make service delivery simple, transparent, and reliable for both customers and technicians.
                 </p>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm text-[#2563EB]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm text-[#0071BD]">
                 <CircleDashed className="h-5 w-5" />
                 Trusted by home repair teams across India
               </div>
@@ -120,7 +120,7 @@ export default function AboutUs() {
 
           <section className="mt-20">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-[#0B3D91]">Our Core Members</h2>
+              <h2 className="text-3xl font-bold text-[#005A99]">Our Core Members</h2>
               <p className="mt-3 max-w-2xl text-slate-600">
                 Experienced professionals driving ServeSetu forward with service, quality, and trust.
               </p>

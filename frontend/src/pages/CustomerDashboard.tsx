@@ -18,7 +18,7 @@ export default function CustomerDashboard() {
             ← Back to Home
           </button>
           <div className="text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#2563EB]">Customer Dashboard</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#0071BD]">Customer Dashboard</p>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Your service history</h1>
           </div>
           <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 shadow-sm">
@@ -31,8 +31,8 @@ export default function CustomerDashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid gap-6 lg:grid-cols-3 mb-10">
           {[
-            { label: "Total Bookings", value: "14", icon: <CalendarCheck className="w-6 h-6 text-white" />, color: "bg-[#0B3D91]" },
-            { label: "Total Spend", value: "₹8,200", icon: <Wallet className="w-6 h-6 text-white" />, color: "bg-[#2563EB]" },
+            { label: "Total Bookings", value: "14", icon: <CalendarCheck className="w-6 h-6 text-white" />, color: "bg-[#005A99]" },
+            { label: "Total Spend", value: "₹8,200", icon: <Wallet className="w-6 h-6 text-white" />, color: "bg-[#0071BD]" },
             { label: "Active Orders", value: "2", icon: <Briefcase className="w-6 h-6 text-white" />, color: "bg-[#1D4ED8]" },
           ].map((card) => (
             <div key={card.label} className="rounded-[2rem] p-6 bg-white border border-slate-200 shadow-sm">
@@ -52,13 +52,13 @@ export default function CustomerDashboard() {
                 <h2 className="text-2xl font-bold text-slate-900">Recent Bookings</h2>
                 <p className="text-sm text-slate-500">Track your latest service requests.</p>
               </div>
-              <button onClick={() => navigate("/services")} className="rounded-full bg-[#0B3D91] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2563EB]">
+              <button onClick={() => navigate("/services")} className="rounded-full bg-[#005A99] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0071BD]">
                 Book again
               </button>
             </div>
             <div className="space-y-4">
               {bookings.map((booking) => (
-                <div key={booking.id} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 hover:border-[#2563EB] transition">
+                <div key={booking.id} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 hover:border-[#0071BD] transition">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                       <p className="text-sm text-slate-500">{booking.service} with {booking.technician}</p>
@@ -77,7 +77,7 @@ export default function CustomerDashboard() {
           </section>
 
           <aside className="space-y-6">
-            <div className="rounded-[2rem] bg-[#0B3D91] p-8 text-white shadow-xl">
+            <div className="rounded-[2rem] bg-[#005A99] p-8 text-white shadow-xl">
               <div className="flex items-center gap-3 mb-4">
                 <ShieldCheck className="w-6 h-6" />
                 <h2 className="text-xl font-bold">Trusted Service</h2>
@@ -87,7 +87,7 @@ export default function CustomerDashboard() {
             <div className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
               <h2 className="text-xl font-bold text-slate-900 mb-4">Need help?</h2>
               <p className="text-slate-600 mb-6">Reach customer support for booking changes, cancellations, and service questions.</p>
-              <button onClick={() => navigate("/services")} className="w-full rounded-full bg-[#2563EB] px-6 py-3 text-white font-semibold hover:bg-[#1D4ED8]">
+              <button onClick={() => navigate("/services")} className="w-full rounded-full bg-[#0071BD] px-6 py-3 text-white font-semibold hover:bg-[#1D4ED8]">
                 Browse Services
               </button>
             </div>

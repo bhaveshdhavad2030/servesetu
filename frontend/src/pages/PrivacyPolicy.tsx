@@ -7,8 +7,8 @@ export default function PrivacyPolicy() {
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-12 shadow-xl">
             <div className="mb-10">
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#2563EB]">Privacy Policy</p>
-              <h1 className="text-4xl font-extrabold tracking-tight text-[#0B3D91] md:text-5xl">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#0071BD]">Privacy Policy</p>
+              <h1 className="text-4xl font-extrabold tracking-tight text-[#005A99] md:text-5xl">
                 Your privacy matters to ServeSetu.
               </h1>
               <p className="mt-5 max-w-3xl leading-relaxed text-slate-600">
@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
 
             <section className="space-y-10">
               <div>
-                <h2 className="mb-4 text-2xl font-bold text-[#0B3D91]">Information We Collect</h2>
+                <h2 className="mb-4 text-2xl font-bold text-[#005A99]">Information We Collect</h2>
                 <p className="mb-4 leading-relaxed text-slate-600">
                   We may collect contact details, service preferences, technician feedback, and booking data to make your experience smooth and reliable.
                 </p>
@@ -30,7 +30,7 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <h2 className="mb-4 text-2xl font-bold text-[#0B3D91]">How We Use Your Data</h2>
+                <h2 className="mb-4 text-2xl font-bold text-[#005A99]">How We Use Your Data</h2>
                 <p className="mb-4 leading-relaxed text-slate-600">
                   We use your data to improve service accuracy, send booking notifications, and keep your account secure.
                 </p>
@@ -42,14 +42,14 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <h2 className="mb-4 text-2xl font-bold text-[#0B3D91]">Data Security</h2>
+                <h2 className="mb-4 text-2xl font-bold text-[#005A99]">Data Security</h2>
                 <p className="leading-relaxed text-slate-600">
                   Your information is protected with secure systems and industry-standard safeguards. We limit access to only authorized team members.
                 </p>
               </div>
 
               <div>
-                <h2 className="mb-4 text-2xl font-bold text-[#0B3D91]">Your Rights</h2>
+                <h2 className="mb-4 text-2xl font-bold text-[#005A99]">Your Rights</h2>
                 <p className="mb-4 leading-relaxed text-slate-600">
                   You can review, update, or delete your personal information by contacting our support team or using the app settings where available.
                 </p>

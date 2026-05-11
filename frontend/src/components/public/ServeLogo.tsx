@@ -4,7 +4,7 @@ interface ServeLogoProps {
   className?: string
 }
 
-export default function ServeLogo({ size = 40, color = '#2563EB', className = '' }: ServeLogoProps) {
+export default function ServeLogo({ size = 40, color = '#0071BD', className = '' }: ServeLogoProps) {
   return (
     <svg
       width={size}

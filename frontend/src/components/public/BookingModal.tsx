@@ -90,7 +90,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#0071BD]">
               Book a Technician
             </p>
             <h2 className="mt-0.5 text-lg font-bold text-slate-900">{technician.name}</h2>
@@ -113,7 +113,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   step > s
                     ? 'bg-emerald-500 text-white'
                     : step === s
-                    ? 'bg-[#0B3D91] text-white'
+                    ? 'bg-[#005A99] text-white'
                     : 'bg-slate-100 text-slate-400'
                 }`}
               >
@@ -134,7 +134,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
           {step === 1 && (
             <div className="space-y-5">
               <div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#0B3D91] text-lg font-bold text-white shadow-lg">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#005A99] text-lg font-bold text-white shadow-lg">
                   {initials}
                 </div>
                 <div className="flex-1">
@@ -143,7 +143,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   <p className="mt-1 text-xs text-slate-400">{technician.label}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl font-extrabold text-[#0B3D91]">₹{technician.price}</p>
+                  <p className="text-xl font-extrabold text-[#005A99]">₹{technician.price}</p>
                   <p className="text-xs text-slate-400">per visit</p>
                 </div>
               </div>
@@ -170,7 +170,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             <div className="space-y-5">
               <div>
                 <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
-                  <Calendar className="h-4 w-4 text-[#2563EB]" />
+                  <Calendar className="h-4 w-4 text-[#0071BD]" />
                   Choose a date
                 </div>
                 <div className="flex gap-2 flex-wrap">
@@ -181,7 +181,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                       onClick={() => setSelectedDate(d.value)}
                       className={`flex flex-col items-center rounded-2xl border px-4 py-3 text-center transition ${
                         selectedDate === d.value
-                          ? 'border-[#0B3D91] bg-[#0B3D91] text-white shadow-lg shadow-[#0B3D91]/20'
+                          ? 'border-[#005A99] bg-[#005A99] text-white shadow-lg shadow-[#005A99]/20'
                           : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
                       }`}
                     >
@@ -199,7 +199,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
 
               <div>
                 <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
-                  <Clock className="h-4 w-4 text-[#2563EB]" />
+                  <Clock className="h-4 w-4 text-[#0071BD]" />
                   Choose a time slot
                 </div>
                 <div className="grid grid-cols-3 gap-3">
@@ -210,7 +210,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                       onClick={() => setSelectedTime(t.id)}
                       className={`rounded-2xl border p-3 text-left transition ${
                         selectedTime === t.id
-                          ? 'border-[#0B3D91] bg-[#0B3D91] text-white shadow-lg shadow-[#0B3D91]/20'
+                          ? 'border-[#005A99] bg-[#005A99] text-white shadow-lg shadow-[#005A99]/20'
                           : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
                       }`}
                     >
@@ -230,10 +230,10 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             <div className="space-y-4">
               <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-[#2563EB]" />
+                  <Calendar className="h-4 w-4 text-[#0071BD]" />
                   <span className="font-medium">{selectedDateLabel?.label}, {selectedDateLabel?.sub}</span>
                   <span className="mx-1 text-slate-300">·</span>
-                  <Clock className="h-4 w-4 text-[#2563EB]" />
+                  <Clock className="h-4 w-4 text-[#0071BD]" />
                   <span className="font-medium">{selectedTimeLabel?.label} ({selectedTimeLabel?.sub})</span>
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:ring-1 focus:ring-[#2563EB]/30"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
               </div>
 
@@ -260,7 +260,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 98765 43210"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:ring-1 focus:ring-[#2563EB]/30"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
               </div>
 
@@ -275,7 +275,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Flat no., building, street, city..."
                   rows={3}
-                  className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:ring-1 focus:ring-[#2563EB]/30"
+                  className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
               </div>
             </div>
@@ -297,7 +297,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#0B3D91] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0B3D91]/20 transition hover:bg-[#2563EB]"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD]"
             >
               Continue
               <ChevronRight className="h-4 w-4" />
@@ -307,7 +307,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
               type="button"
               onClick={handleSubmit}
               disabled={!address.trim() || !name.trim() || !phone.trim() || submitting}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#0B3D91] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0B3D91]/20 transition hover:bg-[#2563EB] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting ? 'Confirming...' : 'Confirm Booking'}
               {!submitting && <CheckCircle2 className="h-4 w-4" />}
