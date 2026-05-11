@@ -1,7 +1,6 @@
 import { ArrowRight, CircleDashed, ShieldCheck, Sparkles, UserRound, Wallet, Wrench } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import PublicSiteLayout from '../components/public/PublicSiteLayout'
-import ServeLogo from '../components/public/ServeLogo'
 
 const featureCards = [
   {
@@ -75,7 +74,9 @@ export default function AboutUs() {
             <div className="flex-1 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl">
               <div className="flex h-full items-center justify-center rounded-[2rem] bg-[#EAF2FF] p-8">
                 <div className="flex h-44 w-44 items-center justify-center rounded-full bg-[#0B3D91] shadow-lg">
-                  <ServeLogo size={90} color="#ffffff" />
+                  <div className="flex h-28 w-28 items-center justify-center rounded-full bg-white p-3">
+                    <img src="/logo.png" alt="ServeSetu" className="h-full w-full object-contain" />
+                  </div>
                 </div>
               </div>
             </div>
