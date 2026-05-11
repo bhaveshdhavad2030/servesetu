@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2 } from 'lucide-react'
+import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2, Phone } from 'lucide-react'
 
 interface Technician {
   id: number
@@ -40,6 +40,13 @@ function getNextDays(count: number) {
   return days
 }
 
+function generateRef(): string {
+  const now = new Date()
+  const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`
+  const rand = String(Math.floor(Math.random() * 9000) + 1000)
+  return `SETU-${date}-${rand}`
+}
+
 const DATES = getNextDays(5)
 
 export default function BookingModal({ isOpen, technician, onClose, onSuccess }: BookingModalProps) {
@@ -50,28 +57,60 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [bookingRef, setBookingRef] = useState('')
 
   if (!isOpen || !technician) return null
 
-  function handleClose() {
+  function resetForm() {
     setStep(1)
     setAddress('')
     setName('')
     setPhone('')
+    setBookingRef('')
+  }
+
+  function handleClose() {
+    resetForm()
     onClose()
   }
 
-  function handleSubmit() {
+  function handleDone() {
+    resetForm()
+    onSuccess()
+  }
+
+  async function handleSubmit() {
     if (!address.trim() || !name.trim() || !phone.trim()) return
     setSubmitting(true)
-    setTimeout(() => {
-      setSubmitting(false)
-      setStep(1)
-      setAddress('')
-      setName('')
-      setPhone('')
-      onSuccess()
-    }, 1200)
+
+    const ref = generateRef()
+    setBookingRef(ref)
+
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+    if (endpoint) {
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            booking_ref: ref,
+            customer_name: name,
+            customer_phone: phone,
+            customer_address: address,
+            technician_name: technician.name,
+            service: technician.service,
+            price: `₹${technician.price}`,
+            date: `${selectedDateLabel?.label}, ${selectedDateLabel?.sub}`,
+            time_slot: `${selectedTimeLabel?.label} (${selectedTimeLabel?.sub})`,
+          }),
+        })
+      } catch {
+        // silently fail — UX must not break if Formspree is down
+      }
+    }
+
+    setSubmitting(false)
+    setStep(4)
   }
 
   const initials = technician.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
@@ -91,41 +130,45 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
         <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-[#0071BD]">
-              Book a Technician
+              {step === 4 ? 'Booking Confirmed' : 'Book a Technician'}
             </p>
-            <h2 className="mt-0.5 text-lg font-bold text-slate-900">{technician.name}</h2>
+            <h2 className="mt-0.5 text-lg font-bold text-slate-900">
+              {step === 4 ? technician.name : technician.name}
+            </h2>
           </div>
           <button
             type="button"
-            onClick={handleClose}
+            onClick={step === 4 ? handleDone : handleClose}
             className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:border-slate-300 hover:text-slate-600"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Step indicator */}
-        <div className="flex items-center gap-2 border-b border-slate-100 px-6 py-3">
-          {[1, 2, 3].map((s) => (
-            <div key={s} className="flex items-center gap-2">
-              <div
-                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-all ${
-                  step > s
-                    ? 'bg-emerald-500 text-white'
-                    : step === s
-                    ? 'bg-[#005A99] text-white'
-                    : 'bg-slate-100 text-slate-400'
-                }`}
-              >
-                {step > s ? <CheckCircle2 className="h-4 w-4" /> : s}
+        {/* Step indicator — hidden on confirmation */}
+        {step < 4 && (
+          <div className="flex items-center gap-2 border-b border-slate-100 px-6 py-3">
+            {[1, 2, 3].map((s) => (
+              <div key={s} className="flex items-center gap-2">
+                <div
+                  className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                    step > s
+                      ? 'bg-emerald-500 text-white'
+                      : step === s
+                      ? 'bg-[#005A99] text-white'
+                      : 'bg-slate-100 text-slate-400'
+                  }`}
+                >
+                  {step > s ? <CheckCircle2 className="h-4 w-4" /> : s}
+                </div>
+                <span className={`text-xs font-medium ${step === s ? 'text-slate-900' : 'text-slate-400'}`}>
+                  {s === 1 ? 'Review' : s === 2 ? 'Schedule' : 'Details'}
+                </span>
+                {s < 3 && <ChevronRight className="h-3.5 w-3.5 text-slate-300" />}
               </div>
-              <span className={`text-xs font-medium ${step === s ? 'text-slate-900' : 'text-slate-400'}`}>
-                {s === 1 ? 'Review' : s === 2 ? 'Schedule' : 'Details'}
-              </span>
-              {s < 3 && <ChevronRight className="h-3.5 w-3.5 text-slate-300" />}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Body */}
         <div className="px-6 py-6">
@@ -147,7 +190,6 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   <p className="text-xs text-slate-400">per visit</p>
                 </div>
               </div>
-
               <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-2.5 text-sm text-slate-600">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
@@ -196,7 +238,6 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   ))}
                 </div>
               </div>
-
               <div>
                 <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
                   <Clock className="h-4 w-4 text-[#0071BD]" />
@@ -237,11 +278,8 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   <span className="font-medium">{selectedTimeLabel?.label} ({selectedTimeLabel?.sub})</span>
                 </div>
               </div>
-
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Full Name
-                </label>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Full Name</label>
                 <input
                   type="text"
                   value={name}
@@ -250,11 +288,8 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
               </div>
-
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Phone Number
-                </label>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Phone Number</label>
                 <input
                   type="tel"
                   value={phone}
@@ -263,7 +298,6 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
               </div>
-
               <div>
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
                   <span className="inline-flex items-center gap-1.5">
@@ -280,38 +314,103 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
               </div>
             </div>
           )}
+
+          {/* Step 4 — Confirmation */}
+          {step === 4 && (
+            <div className="space-y-5">
+              <div className="flex flex-col items-center gap-3 pt-2 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+                  <CheckCircle2 className="h-9 w-9 text-emerald-500" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Booking Request Sent!</h3>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Reference:{' '}
+                    <span className="font-mono font-semibold text-[#005A99]">{bookingRef}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 space-y-3 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Technician</span>
+                  <span className="font-semibold text-slate-800">{technician.name}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Service</span>
+                  <span className="font-semibold text-slate-800">{technician.service}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Date</span>
+                  <span className="font-semibold text-slate-800">{selectedDateLabel?.label}, {selectedDateLabel?.sub}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Time</span>
+                  <span className="font-semibold text-slate-800">{selectedTimeLabel?.label} · {selectedTimeLabel?.sub}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Amount</span>
+                  <span className="font-extrabold text-[#005A99]">₹{technician.price}</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 rounded-2xl bg-[#E0F2FB] px-4 py-3 text-sm text-[#005A99]">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0" />
+                <p>
+                  Our team will call you at{' '}
+                  <span className="font-semibold">{phone}</span> within{' '}
+                  <span className="font-semibold">2 hours</span> to confirm your appointment.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer buttons */}
         <div className="flex items-center justify-between border-t border-slate-100 px-6 py-4">
-          <button
-            type="button"
-            onClick={() => (step === 1 ? handleClose() : setStep((s) => s - 1))}
-            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
-          >
-            {step === 1 ? null : <ChevronLeft className="h-4 w-4" />}
-            {step === 1 ? 'Cancel' : 'Back'}
-          </button>
-
-          {step < 3 ? (
-            <button
-              type="button"
-              onClick={() => setStep((s) => s + 1)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD]"
-            >
-              Continue
-              <ChevronRight className="h-4 w-4" />
-            </button>
+          {step === 4 ? (
+            <div className="w-full">
+              <button
+                type="button"
+                onClick={handleDone}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#005A99] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD]"
+              >
+                Done
+                <CheckCircle2 className="h-4 w-4" />
+              </button>
+            </div>
           ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!address.trim() || !name.trim() || !phone.trim() || submitting}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD] disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {submitting ? 'Confirming...' : 'Confirm Booking'}
-              {!submitting && <CheckCircle2 className="h-4 w-4" />}
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => (step === 1 ? handleClose() : setStep((s) => s - 1))}
+                className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+              >
+                {step > 1 && <ChevronLeft className="h-4 w-4" />}
+                {step === 1 ? 'Cancel' : 'Back'}
+              </button>
+
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={() => setStep((s) => s + 1)}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD]"
+                >
+                  Continue
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!address.trim() || !name.trim() || !phone.trim() || submitting}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {submitting ? 'Confirming...' : 'Confirm Booking'}
+                  {!submitting && <CheckCircle2 className="h-4 w-4" />}
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
