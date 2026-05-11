@@ -184,13 +184,6 @@ export default function Services() {
                     Browse Technicians
                     <ArrowRight className="h-4 w-4" />
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => navigate('/customer-dashboard')}
-                    className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-8 py-4 font-semibold text-slate-900 shadow-sm transition hover:border-slate-300 hover:shadow-md"
-                  >
-                    Customer Dashboard
-                  </button>
                 </div>
 
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">

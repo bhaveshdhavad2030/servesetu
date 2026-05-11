@@ -1,7 +1,30 @@
+import { useState } from 'react'
 import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import PublicSiteLayout from '../components/public/PublicSiteLayout'
+import Toast from '../components/public/Toast'
 
 export default function ContactUs() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [requirement, setRequirement] = useState('')
+  const [message, setMessage] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [toast, setToast] = useState({ visible: false, message: '' })
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!name.trim() || !email.trim() || !message.trim()) return
+    setSubmitting(true)
+    setTimeout(() => {
+      setSubmitting(false)
+      setName('')
+      setEmail('')
+      setRequirement('')
+      setMessage('')
+      setToast({ visible: true, message: 'Message sent! Our team will reach you shortly.' })
+    }, 1000)
+  }
+
   return (
     <PublicSiteLayout>
       <div className="bg-gradient-to-b from-slate-50 via-white to-slate-100 pt-28">
@@ -9,7 +32,7 @@ export default function ContactUs() {
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
               <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#2563EB]">Contact Us</p>
-              <h1 className="mb-6 text-4xl font-extrabold text-[#0B3D91] md:text-5xl">We’re here to help you, always.</h1>
+              <h1 className="mb-6 text-4xl font-extrabold text-[#0B3D91] md:text-5xl">We're here to help you, always.</h1>
               <p className="mb-10 max-w-xl text-lg leading-relaxed text-slate-600">
                 Need service support, booking help, or general questions? Reach out and our team will respond quickly.
               </p>
@@ -20,7 +43,7 @@ export default function ContactUs() {
                     <div className="rounded-3xl bg-[#EAF2FF] p-4 text-[#0B3D91]"><Phone className="h-6 w-6" /></div>
                     <h2 className="text-xl font-bold text-[#0B3D91]">Call Us</h2>
                   </div>
-                  <a href="tel:+919999999999" className="text-slate-600 transition-colors hover:text-[#0B3D91]">+91 99999 99999</a>
+                  <p className="text-slate-600">Available Mon–Sat, 9 AM – 7 PM</p>
                 </div>
 
                 <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-xl">
@@ -49,16 +72,22 @@ export default function ContactUs() {
                 </p>
               </div>
 
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <input
                     type="text"
                     placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
                     className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-900 outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
                   />
                   <input
                     type="email"
                     placeholder="Your Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-900 outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
                   />
                 </div>
@@ -66,20 +95,26 @@ export default function ContactUs() {
                 <input
                   type="text"
                   placeholder="Your Requirement"
+                  value={requirement}
+                  onChange={(e) => setRequirement(e.target.value)}
                   className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-900 outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
                 />
 
                 <textarea
                   placeholder="Your Message"
                   rows={6}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
                   className="w-full resize-none rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-900 outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
                 />
 
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-3 rounded-full bg-[#0B3D91] px-8 py-4 font-semibold text-white transition hover:bg-[#2563EB]"
+                  disabled={!name.trim() || !email.trim() || !message.trim() || submitting}
+                  className="inline-flex items-center gap-3 rounded-full bg-[#0B3D91] px-8 py-4 font-semibold text-white transition hover:bg-[#2563EB] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Send Message
+                  {submitting ? 'Sending...' : 'Send Message'}
                   <Send className="h-5 w-5" />
                 </button>
               </form>
@@ -87,6 +122,13 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
+
+      <Toast
+        visible={toast.visible}
+        message={toast.message}
+        type="success"
+        onClose={() => setToast((t) => ({ ...t, visible: false }))}
+      />
     </PublicSiteLayout>
   )
 }

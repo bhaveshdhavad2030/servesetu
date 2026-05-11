@@ -13,7 +13,11 @@ const navItems = [
 function BrandMark({ onDark = false }: { onDark?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <ServeLogo size={38} color={onDark ? '#ffffff' : '#2563EB'} />
+      {onDark ? (
+        <ServeLogo size={38} color="#ffffff" />
+      ) : (
+        <img src="/logo.png" alt="ServeSetu" className="h-9 w-9 object-contain" />
+      )}
       <span className={`text-2xl font-bold tracking-tight ${onDark ? 'text-white' : 'text-[#0B3D91]'}`}>
         Serve<span className={onDark ? 'text-blue-300' : 'text-[#2563EB]'}>Setu</span>
       </span>
