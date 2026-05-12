@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2, Phone } from 'lucide-react'
+import { X, ChevronRight, ChevronLeft, Calendar, Clock, MapPin, CheckCircle2, Phone, FileText } from 'lucide-react'
 
 interface Technician {
   id: number
@@ -22,6 +22,45 @@ const TIME_SLOTS = [
   { id: 'afternoon', label: 'Afternoon', sub: '12:00 PM – 3:00 PM' },
   { id: 'evening', label: 'Evening', sub: '4:00 PM – 7:00 PM' },
 ] as const
+
+const SERVICE_ISSUES: Record<string, string[]> = {
+  Plumbing: [
+    'Leaking pipe or tap',
+    'Blocked drain or toilet',
+    'Bathroom fitting issue',
+    'Low water pressure',
+    'Water heater or geyser problem',
+  ],
+  Electrical: [
+    'Power trip or outage',
+    'Switchboard or socket issue',
+    'Fan not working',
+    'Light fixture problem',
+    'New wiring or installation',
+  ],
+  'AC Service': [
+    'AC not cooling',
+    'AC not turning on',
+    'Strange noise or smell',
+    'Water leaking from AC',
+    'Deep cleaning needed',
+    'Gas refill needed',
+  ],
+  'Appliance Repair': [
+    'Washing machine problem',
+    'Refrigerator not cooling',
+    'Microwave not working',
+    'Dishwasher issue',
+    'Other appliance not working',
+  ],
+  Painting: [
+    'Interior wall painting',
+    'Exterior painting',
+    'Touch-up or repair work',
+    'Texture or design work',
+    'Waterproofing needed',
+  ],
+}
 
 function getNextDays(count: number) {
   const days: { label: string; sub: string; value: string }[] = []
@@ -56,16 +95,28 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
   const [address, setAddress] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [issueChip, setIssueChip] = useState('')
+  const [issueCustom, setIssueCustom] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [bookingRef, setBookingRef] = useState('')
 
+  function isValidPhone(p: string) {
+    return p.replace(/\D/g, '').length >= 10
+  }
+
   if (!isOpen || !technician) return null
+
+  const issueOptions = SERVICE_ISSUES[technician.service] ?? []
+  const resolvedIssue = issueChip === 'Other' ? issueCustom.trim() : issueChip
+  const isIssueValid = issueChip !== '' && (issueChip !== 'Other' || issueCustom.trim() !== '')
 
   function resetForm() {
     setStep(1)
     setAddress('')
     setName('')
     setPhone('')
+    setIssueChip('')
+    setIssueCustom('')
     setBookingRef('')
   }
 
@@ -80,7 +131,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
   }
 
   async function handleSubmit() {
-    if (!address.trim() || !name.trim() || !phone.trim()) return
+    if (!address.trim() || !name.trim() || !isValidPhone(phone) || !isIssueValid || !technician) return
     setSubmitting(true)
 
     const ref = generateRef()
@@ -97,6 +148,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             customer_name: name,
             customer_phone: phone,
             customer_address: address,
+            issue_description: resolvedIssue,
             technician_name: technician.name,
             service: technician.service,
             price: `₹${technician.price}`,
@@ -132,9 +184,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
             <p className="text-xs font-semibold uppercase tracking-widest text-[#0071BD]">
               {step === 4 ? 'Booking Confirmed' : 'Book a Technician'}
             </p>
-            <h2 className="mt-0.5 text-lg font-bold text-slate-900">
-              {step === 4 ? technician.name : technician.name}
-            </h2>
+            <h2 className="mt-0.5 text-lg font-bold text-slate-900">{technician.name}</h2>
           </div>
           <button
             type="button"
@@ -145,7 +195,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
           </button>
         </div>
 
-        {/* Step indicator — hidden on confirmation */}
+        {/* Step indicator */}
         {step < 4 && (
           <div className="flex items-center gap-2 border-b border-slate-100 px-6 py-3">
             {[1, 2, 3].map((s) => (
@@ -171,7 +221,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
         )}
 
         {/* Body */}
-        <div className="px-6 py-6">
+        <div className="max-h-[60vh] overflow-y-auto px-6 py-6">
 
           {/* Step 1 — Review */}
           {step === 1 && (
@@ -308,9 +358,52 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Flat no., building, street, city..."
-                  rows={3}
+                  rows={2}
                   className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
                 />
+              </div>
+              <div>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <span className="inline-flex items-center gap-1.5">
+                    <FileText className="h-3 w-3" /> What's the issue?
+                  </span>
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {issueOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => { setIssueChip(opt); setIssueCustom('') }}
+                      className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                        issueChip === opt
+                          ? 'border-[#005A99] bg-[#005A99] text-white'
+                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => { setIssueChip('Other'); setIssueCustom('') }}
+                    className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                      issueChip === 'Other'
+                        ? 'border-[#005A99] bg-[#005A99] text-white'
+                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
+                    }`}
+                  >
+                    Other
+                  </button>
+                </div>
+                {issueChip === 'Other' && (
+                  <textarea
+                    value={issueCustom}
+                    onChange={(e) => setIssueCustom(e.target.value)}
+                    placeholder="Briefly describe your issue..."
+                    rows={3}
+                    className="mt-3 w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0071BD] focus:bg-white focus:ring-1 focus:ring-[#0071BD]/30"
+                  />
+                )}
               </div>
             </div>
           )}
@@ -351,6 +444,10 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Amount</span>
                   <span className="font-extrabold text-[#005A99]">₹{technician.price}</span>
+                </div>
+                <div className="border-t border-slate-100 pt-3">
+                  <p className="text-xs text-slate-400 mb-1">Issue reported</p>
+                  <p className="text-sm text-slate-700">{resolvedIssue}</p>
                 </div>
               </div>
 
@@ -403,7 +500,7 @@ export default function BookingModal({ isOpen, technician, onClose, onSuccess }:
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  disabled={!address.trim() || !name.trim() || !phone.trim() || submitting}
+                  disabled={!address.trim() || !name.trim() || !isValidPhone(phone) || !isIssueValid || submitting}
                   className="inline-flex items-center gap-1.5 rounded-full bg-[#005A99] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#005A99]/20 transition hover:bg-[#0071BD] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submitting ? 'Confirming...' : 'Confirm Booking'}

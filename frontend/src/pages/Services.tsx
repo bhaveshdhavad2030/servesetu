@@ -5,6 +5,7 @@ import {
   BookOpen,
   Clock3,
   Droplets,
+  Paintbrush,
   Search,
   ShieldCheck,
   Sparkles,
@@ -54,6 +55,15 @@ const serviceCategories = [
     accent: 'from-indigo-500 to-blue-500',
     icon: <BookOpen className="h-6 w-6 text-white" />,
   },
+  {
+    id: 5,
+    title: 'Painting',
+    description: 'Interior and exterior wall painting, touch-ups, texture work, and waterproofing.',
+    price: 'Starts at ₹999',
+    eta: 'Weekend slots available',
+    accent: 'from-violet-500 to-indigo-500',
+    icon: <Paintbrush className="h-6 w-6 text-white" />,
+  },
 ] as const
 
 const trustStats = [
@@ -79,11 +89,11 @@ const bookingSteps = [
 
 const technicians = [
   { id: 1, name: 'Raj Kumar', service: 'Plumbing', rating: 4.8, price: 500, label: 'Best for leaks', response: 'Fast response' },
-  { id: 2, name: 'Priya Sharma', service: 'Electrical', rating: 4.9, price: 600, label: 'Fast & safe', response: 'Verified expert' },
+  { id: 2, name: 'Rohan Mehta', service: 'Electrical', rating: 4.9, price: 600, label: 'Fast & safe', response: 'Verified expert' },
   { id: 3, name: 'Arjun Singh', service: 'AC Service', rating: 4.7, price: 800, label: 'Cool expert', response: 'Top-rated cooling pro' },
-  { id: 4, name: 'Neha Patel', service: 'Painting', rating: 4.6, price: 1000, label: 'Wall artist', response: 'Weekend slots open' },
+  { id: 4, name: 'Kiran Shah', service: 'Painting', rating: 4.6, price: 1000, label: 'Wall expert', response: 'Weekend slots open' },
   { id: 5, name: 'Vikram Das', service: 'Appliance Repair', rating: 4.8, price: 700, label: 'Smart fixes', response: 'Trusted for kitchen repairs' },
-  { id: 6, name: 'Ananya Verma', service: 'Plumbing', rating: 4.9, price: 500, label: 'Rapid response', response: 'Quick arrival support' },
+  { id: 6, name: 'Suresh Nair', service: 'Plumbing', rating: 4.9, price: 500, label: 'Rapid response', response: 'Quick arrival support' },
 ]
 
 const promiseCards = [
@@ -237,7 +247,7 @@ export default function Services() {
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {serviceCategories.map((service) => (
                 <button
                   key={service.id}
